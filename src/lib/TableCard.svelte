@@ -7,22 +7,22 @@
     export let rating;
     let index = 0;
 
-    const clickImgLeft = () => {
-        index--;
-        index = index < 0 ? images.length - 1 : index;
-    }
+    // const clickImgLeft = () => {
+    //     index--;
+    //     index = index < 0 ? images.length - 1 : index;
+    // }
 
-    const clickImgRight = () => {
-        index++;
-        index = index > images.length - 1 ? 0 : index;
-    }
+    // const clickImgRight = () => {
+    //     index++;
+    //     index = index > images.length - 1 ? 0 : index;
+    // }
 </script>
 
 <tr>
-    <td>
-        <button on:click={clickImgLeft}></button>
-        <img src={images[index]} alt="">
-        <button on:click={clickImgRight}></button>
+    <td class="img-container">
+        <!-- <button on:click={clickImgLeft}></button> -->
+        <img src={images[index]} class="img-fluid" alt="">
+        <!-- <button on:click={clickImgRight}></button> -->
     </td>
     <td>{title}</td>
     <td>{brand}</td>
@@ -33,13 +33,14 @@
 
 <style>
     tr {
-        border-radius: 5px;
-        background-color: #ede6e3;
-        margin: 5px 0;
+        height: 100px;
+    }
+    .img-container {
+        display: flex;
     }
     img {
         object-fit: contain;
-        width: 50px;
-        height: 50px;
+        max-height: 100px;
+        overflow: hidden;
     }
 </style>

@@ -19,16 +19,25 @@
     }
 </script>
 
-<div class="card" title={title}>
-    <h2>{title}</h2>
-    <h3>{brand}</h3>
-    <div class="img-section">
-        <button on:click={clickImgLeft} class='arrow' disabled={!(images.length > 1)}>{`<`}</button>
-        <img src={images[index]} alt={description} >
-        <button on:click={clickImgRight} class='arrow' disabled={!(images.length > 1)}>{`>`}</button>
+<div class="card text-white bg-dark mb-3" title={title}>
+    <div class="card-header">{brand}</div>
+    <div class="card-body">
+        <h5 class="card-title">{title}</h5>
+        <p class="card-text">{description}</p>
     </div>
-    <p>{description}</p>
-    <button on:click={() => seeMore = !seeMore}>See {seeMore ? 'less' : 'more'}</button>
+    <div class="img-section">
+        <!-- <button on:click={clickImgLeft} class='arrow' disabled={!(images.length > 1)}>{`<`}</button> -->
+        <img class="card-img-top" src={images[index]} alt={description} >
+        <!-- <button on:click={clickImgRight} class='arrow' disabled={!(images.length > 1)}>{`>`}</button> -->
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <span>$ {price}</span>
+            <span>Rating: {rating}</span>
+        </p>
+    </div>
+    
+    <!-- <button on:click={() => seeMore = !seeMore}>See {seeMore ? 'less' : 'more'}</button> -->
     <div class='{`info ${seeMore ? 'info-open' : ''}`}'>
         {#if seeMore}
             <p>$ {price}</p>
@@ -38,32 +47,13 @@
 </div>
 
 <style>
-    .card { 
-        width: 300px;
-        margin: 10px;
-    }
-    div {
-        outline: 1px dotted blue;
-    }
     .img-section {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .arrow {
-        cursor: pointer;
+    .card-text {
+        display: flex;
+        justify-content: space-between;
     }
-    img {
-        object-fit: contain;
-        width: 250px;
-        height: 250px;
-    }
-    .info {
-        max-height: 0%;
-        transition: max-height 2s;
-    }
-    .info-open {
-        max-height: 100%;
-    }
-
 </style>

@@ -1,10 +1,11 @@
 <script>
-  import { productList } from "./Store";
-  import { viewMode } from "./Store";
-  import { searchActive } from "./Store";
   import Card from "./Card.svelte";
   import TableCard from "./TableCard.svelte";
   import { loadingData } from "./Store";
+  import { productList } from "./Store";  
+  import { searchActive } from "./Store";
+  import { viewMode } from "./Store";
+  
   let sortAsc = false;
 
   fetch('https://dummyjson.com/products/')
@@ -57,38 +58,44 @@
   {#if $loadingData}
     <p>Loading...</p>
   {:else}
-    <p>{$productList.length} result{$productList.length !== 1 ? 's' : ''}</p>
-    {#if $searchActive.length}
-      <p>&nbsp;for "{$searchActive}"</p>
-    {/if}
-
+    <div class="result-text">
+      <p>{$productList.length} result{$productList.length !== 1 ? 's' : ''}</p>
+      {#if $searchActive.length}
+        <p>&nbsp;for "{$searchActive}"</p>
+      {/if}
+    </div>
     {#if $productList.length}
       {#if $viewMode==='grid'}
+        <div class="card-columns">
         {#each $productList as productInfo}
-          <div>
             <Card {...productInfo} />
-          </div>
         {/each}
+      </div>
       {/if}
 
       {#if $viewMode==='table'}
-        <table>
-          <tr>
-            {#each headers as header}
-              <th>
-                {#if header.sortBy}
-                  <button on:click={order(header.sortBy, header.sortMode)}>
-                    {header.title}
-                  </button>              
-                {:else}
-                  <span>{header.title}</span>
-                {/if}
-              </th>
-            {/each}
-          </tr>
-          {#each $productList as productInfo}
-            <TableCard {...productInfo} />
-          {/each}
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              {#each headers as header}
+                <th>
+                  {#if header.sortBy}
+                    <button on:click={order(header.sortBy, header.sortMode)} class="btn-sort">
+                      <span>{header.title}</span>
+                      <i class="fa fa-sort" aria-hidden="true"></i>  
+                    </button>                    
+                  {:else}
+                    <span>{header.title}</span>
+                  {/if}
+                </th>
+              {/each}
+            </tr>  
+          </thead>
+          <tbody>
+            {#each $productList as productInfo}
+              <TableCard {...productInfo} />
+            {/each}  
+          </tbody>
         </table>
       {/if}
     {/if}
@@ -96,15 +103,22 @@
 </div>
 
 <style>
-  .container {
+  .result-text {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-end;
   }
-  table {
-    border-collapse: collapse;
+  .btn-sort {
+    color: #fff;
+    font-weight: bold;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
   }
-  th {
-    background-color: #dadad9;
+  .btn-sort span {
+    margin-right: 10px;
   }
 </style>

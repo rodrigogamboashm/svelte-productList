@@ -3,8 +3,8 @@
     import { searchActive } from "./Store";
     import { loadingData } from "./Store";
     let inputSearch = '';
-    
-    const search = search => {        
+
+    const search = search => {
         return (() => {
             loadingData.set(true);
             searchActive.set(search);
@@ -24,38 +24,33 @@
     }
 </script>
 
-<div>
-    <input type="text" bind:value={inputSearch} placeholder="Search">
+<div class="input-group">
+    <input type="text" class="form-control" bind:value={inputSearch} placeholder="Search">
     {#if inputSearch.length}
-        <button on:click={clearInput} class="btn-clear">x</button>
+        <button on:click={clearInput} class="btn btn-clear">x</button>
     {/if}
-    <button disabled={!inputSearch} on:click={search(inputSearch)} class="btn-search" title="Search by name or description">Search</button>    
-    <button on:click={search('')}>Reset</button>
+    <div class="input-group-append">
+        <button on:click={search(inputSearch)} class="btn" type="button" disabled={!inputSearch}  title="Search by name or description">Search</button>
+        <button on:click={search('')} class="btn">Reset</button>
+    </div>
 </div>
 
 <style>
-    input {
-        border-radius: 40px 0 0 40px;
-        border: 1px solid #ccc;
-        height: 40px;
+    .input-group {
+        width: auto;
     }
-    .btn-search {
-        border-radius: 0 40px 40px 0;
+    input {
+        max-width: 300px;
     }
     .btn-clear {
-        position: relative;
-        right: 50px;
+        position: absolute;
+        right: 140px;
+        z-index: 10;
+        margin: none;
         background-color: transparent;
-        padding: 0;
-        margin: 0;
+        border-radius: 50%;
     }
     .btn-clear:hover {
-        border: none;
-        border-radius: 50px;
-        background-color: #dadada;
-    }
-    .btn-clear:focus {
-        border: none;
+        background: var(--light);
     }
 </style>
-
